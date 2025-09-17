@@ -120,17 +120,12 @@ const translations = {
     'validation.unique.codeInBranch': 'Mã đã tồn tại trong chi nhánh này',
     
     // Additional warehouse translations
-    'warehouse.codeHint': 'Định dạng: WH_XXX (ví dụ: WH_001)',
-    'warehouse.createDescription': 'Tạo kho hàng mới với thông tin chi tiết',
-    'warehouse.editDescription': 'Chỉnh sửa thông tin kho hàng',
+    'warehouse.codeHint': 'Code format: WH_XXX (e.g., WH_001)',
 
     // Common search/select
-    'common.selectOrganizationFirst': 'Vui lòng chọn tổ chức trước',
-    'common.selectOrganization': 'Chọn tổ chức',
-    'common.selectBranch': 'Chọn chi nhánh',
-    'common.searchOrganizations': 'Tìm kiếm tổ chức...',
-    'common.searchBranches': 'Tìm kiếm chi nhánh...',
-    'common.noResults': 'Không tìm thấy kết quả'
+    'common.searchOrganizations': 'Search organizations...',
+    'common.searchBranches': 'Search branches...',
+    'common.noResults': 'No results found'
   },
   vn: {
     // Navigation
@@ -243,13 +238,8 @@ const translations = {
     
     // Additional warehouse translations
     'warehouse.codeHint': 'Định dạng: WH_XXX (ví dụ: WH_001)',
-    'warehouse.createDescription': 'Tạo kho hàng mới với thông tin chi tiết',
-    'warehouse.editDescription': 'Chỉnh sửa thông tin kho hàng',
 
     // Common search/select
-    'common.selectOrganizationFirst': 'Vui lòng chọn tổ chức trước',
-    'common.selectOrganization': 'Chọn tổ chức',
-    'common.selectBranch': 'Chọn chi nhánh',
     'common.searchOrganizations': 'Tìm kiếm tổ chức...',
     'common.searchBranches': 'Tìm kiếm chi nhánh...',
     'common.noResults': 'Không tìm thấy kết quả'

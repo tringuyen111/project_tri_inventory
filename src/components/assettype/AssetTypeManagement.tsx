@@ -35,7 +35,7 @@ export function AssetTypeManagement() {
     inactive: language === 'vi' ? 'Không hoạt động' : 'Inactive',
     code: language === 'vi' ? 'Mã' : 'Code',
     name: language === 'vi' ? 'Tên' : 'Name',
-    description: language === 'vi' ? 'Mô tả' : 'Description',
+    descriptionColumn: language === 'vi' ? 'Mô tả' : 'Description',
     status: language === 'vi' ? 'Trạng thái' : 'Status',
     actions: language === 'vi' ? 'Thao tác' : 'Actions',
     edit: language === 'vi' ? 'Sửa' : 'Edit',
@@ -195,7 +195,7 @@ export function AssetTypeManagement() {
                 <TableRow>
                   <TableHead>{texts.code}</TableHead>
                   <TableHead>{texts.name}</TableHead>
-                  <TableHead>{texts.description}</TableHead>
+                  <TableHead>{texts.descriptionColumn}</TableHead>
                   <TableHead className="w-24">{texts.status}</TableHead>
                   <TableHead className="w-20 text-right">{texts.actions}</TableHead>
                 </TableRow>
