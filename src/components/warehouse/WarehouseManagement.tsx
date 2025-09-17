@@ -31,7 +31,7 @@ import {
 import { Card, CardContent, CardHeader, CardTitle } from '../ui/card'
 import { WarehouseForm } from './WarehouseForm'
 import { Plus, Search, MoreHorizontal, Edit, Trash2, Eye, EyeOff, Filter, X } from 'lucide-react'
-import { toast } from 'sonner@2.0.3'
+import { toast } from 'sonner'
 import { useLanguage } from '../../contexts/LanguageContext'
 import { mockWarehouses } from '../../data/mockWarehouseData'
 import { getWarehouseOrganizations } from '../../data/mockOrganizationData'

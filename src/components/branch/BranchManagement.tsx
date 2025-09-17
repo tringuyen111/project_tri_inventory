@@ -12,7 +12,7 @@ import { Organization } from '../../types/organization'
 import { BranchForm } from './BranchForm'
 import { useLanguage } from '../../contexts/LanguageContext'
 import { getBranches, createBranch, updateBranch, deleteBranch, getActiveOrganizations } from '../../data/mockBranchData'
-import { toast } from 'sonner@2.0.3'
+import { toast } from 'sonner'
 import { Plus, Search, MoreHorizontal, Edit, Trash2, GitBranch, Building2, CheckCircle, XCircle } from 'lucide-react'
 
 const translations = {

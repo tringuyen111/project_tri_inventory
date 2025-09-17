@@ -6,7 +6,7 @@ import { useLanguage } from '../../contexts/LanguageContext'
 import { GoodsReceiptForm } from './GoodsReceiptFormFixed'
 import { mockGoodsReceipts } from '../../data/mockGoodsReceiptData'
 import { GoodsReceipt } from '../../types/goodsReceipt'
-import { toast } from 'sonner@2.0.3'
+import { toast } from 'sonner'
 
 const translations = {
   en: {

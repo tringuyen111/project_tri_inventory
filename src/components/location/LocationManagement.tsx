@@ -11,7 +11,7 @@ import { LocationForm } from "./LocationForm";
 import { Location, CreateLocationData, UpdateLocationData } from "../../types/location";
 import { getLocations, createLocation, updateLocation, getActiveAssetTypes, getWarehousesForLocation } from "../../data/mockLocationData";
 import { useLanguage } from "../../contexts/LanguageContext";
-import { toast } from "sonner@2.0.3";
+import { toast } from "sonner";
 
 export function LocationManagement() {
   const { language } = useLanguage();

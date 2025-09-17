@@ -11,7 +11,7 @@ import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, 
 import { useLanguage } from '../../contexts/LanguageContext'
 import { mockGoodsReceipts } from '../../data/mockGoodsReceiptData'
 import { GoodsReceipt, GoodsReceiptLine } from '../../types/goodsReceipt'
-import { toast } from 'sonner@2.0.3'
+import { toast } from 'sonner'
 
 const translations = {
   en: {

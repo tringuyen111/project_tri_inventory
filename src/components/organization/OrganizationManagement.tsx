@@ -11,7 +11,7 @@ import { Organization, OrganizationFormData } from '../../types/organization'
 import { OrganizationForm } from './OrganizationForm'
 import { useLanguage } from '../../contexts/LanguageContext'
 import { getOrganizations, createOrganization, updateOrganization, deleteOrganization } from '../../data/mockOrganizationData'
-import { toast } from 'sonner@2.0.3'
+import { toast } from 'sonner'
 import { Plus, Search, MoreHorizontal, Edit, Trash2, Building2, Users, CheckCircle, XCircle } from 'lucide-react'
 
 const translations = {

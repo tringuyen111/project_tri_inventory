@@ -1,4 +1,4 @@
-import { Toaster as Sonner } from "sonner@2.0.3"
+import { Toaster as Sonner } from "sonner"
 import { useTheme } from "../contexts/ThemeContext"
 
 export function Toaster() {
