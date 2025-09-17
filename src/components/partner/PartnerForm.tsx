@@ -7,7 +7,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '.
 import { Textarea } from '../ui/textarea';
 import { Partner, CreatePartnerData, UpdatePartnerData } from '../../types/partner';
 import { mockPartners, getPartnersWithOpenDocuments } from '../../data/mockPartnerData';
-import { toast } from 'sonner@2.0.3';
+import { toast } from 'sonner';
 import { useLanguage } from '../../contexts/LanguageContext';
 
 interface PartnerFormProps {

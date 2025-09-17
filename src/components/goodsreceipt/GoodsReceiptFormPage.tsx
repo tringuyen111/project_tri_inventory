@@ -21,7 +21,7 @@ import { mockUoMs } from '../../data/mockUomData'
 import { generateReceiptNumber, mockGoodsReceipts } from '../../data/mockGoodsReceiptData'
 import { WarehouseSelectWithSearch } from './WarehouseSelectWithSearch'
 import { PartnerSelectWithSearch } from './PartnerSelectWithSearch'
-import { toast } from 'sonner@2.0.3'
+import { toast } from 'sonner'
 
 const translations = {
   en: {

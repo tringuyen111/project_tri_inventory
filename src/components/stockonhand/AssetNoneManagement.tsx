@@ -15,7 +15,7 @@ import { mockWarehouses } from '../../data/mockWarehouseData'
 import { mockLocations } from '../../data/mockLocationData'
 import { AssetNoneForm } from './AssetNoneForm'
 import { Plus, Search, Pencil, Trash2, List, AlertTriangle, X } from 'lucide-react'
-import { toast } from 'sonner@2.0.3'
+import { toast } from 'sonner'
 
 export function AssetNoneManagement() {
   const { language } = useLanguage()
