@@ -8,7 +8,7 @@ import { Alert, AlertDescription } from '../ui/alert'
 import { Badge } from '../ui/badge'
 import { useLanguage } from '../../contexts/LanguageContext'
 import { GoodsReceipt } from '../../types/goodsReceipt'
-import { toast } from 'sonner@2.0.3'
+import { toast } from 'sonner'
 
 const translations = {
   en: {

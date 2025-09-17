@@ -15,7 +15,7 @@ import { useLanguage } from '../../contexts/LanguageContext'
 import { GoodsReceipt, GoodsReceiptWarning, GoodsReceiptActualRecord, GoodsReceiptAuditLog } from '../../types/goodsReceipt'
 import { mockGoodsReceipts, mockWarnings, mockAuditLogs } from '../../data/mockGoodsReceiptData'
 import { GoodsReceiptSpecialActions } from './GoodsReceiptSpecialActions'
-import { toast } from 'sonner@2.0.3'
+import { toast } from 'sonner'
 
 const translations = {
   en: {

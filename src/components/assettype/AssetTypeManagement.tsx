@@ -6,7 +6,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "../ui/card";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "../ui/table";
 import { Badge } from "../ui/badge";
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from "../ui/dialog";
-import { toast } from "sonner@2.0.3";
+import { toast } from "sonner";
 import { useLanguage } from "../../contexts/LanguageContext";
 import { AssetType, AssetTypeFilters, AssetTypeFormData } from "../../types/assetType";
 import { getAssetTypes, createAssetType, updateAssetType } from "../../data/mockAssetTypeData";
