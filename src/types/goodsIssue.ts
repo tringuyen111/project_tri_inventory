@@ -9,8 +9,15 @@ export interface GoodsIssueLine {
 
 export interface GoodsIssue {
   issue_no: string
-  issue_type: 'Sales Order' | 'Transfer' | 'Return' | 'Manual'
-  status: 'Draft' | 'Picking' | 'Picked' | 'Completed' | 'Cancelled'
+  issue_type: 'SO' | 'Transfer' | 'ReturnToSupplier' | 'Adjustment' | 'Manual'
+  status:
+    | 'Draft'
+    | 'Picking'
+    | 'AdjustmentRequested'
+    | 'Submitted'
+    | 'Approved'
+    | 'Completed'
+    | 'Cancelled'
   partner_name?: string
   from_wh_name: string
   to_wh_name?: string
