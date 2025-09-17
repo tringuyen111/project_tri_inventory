@@ -1,4 +1,4 @@
-import { useState, useMemo } from 'react'
+import { useState, useMemo, useEffect } from 'react'
 import { Button } from '../ui/button'
 import { Input } from '../ui/input'
 import { Badge } from '../ui/badge'
@@ -92,14 +92,14 @@ export function WarehouseManagement() {
   }, [warehouses, searchQuery, filterOrg, filterBranch, filterStatus])
 
   // Reset branch filter when organization filter changes
-  useState(() => {
+  useEffect(() => {
     if (filterOrg && filterBranch) {
       const selectedBranch = activeBranches.find(b => b.id === filterBranch)
       if (!selectedBranch || selectedBranch.organizationId !== filterOrg) {
         setFilterBranch('')
       }
     }
-  })
+  }, [filterOrg, filterBranch, activeBranches])
 
   const handleCreate = () => {
     setEditingWarehouse(undefined)
