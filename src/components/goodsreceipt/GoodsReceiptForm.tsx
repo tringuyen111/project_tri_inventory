@@ -565,7 +565,7 @@ export function GoodsReceiptForm({ receipt, viewMode = false, onSuccess, onCance
   }
 
   return (
-    <form onSubmit={handleSubmit((data) => onSubmit(data, true))} className="space-y-6">
+    <form onSubmit={handleSubmit((data) => onSubmit(data, false))} className="space-y-6">
       {/* Header Section */}
       <Card>
         <CardHeader>
