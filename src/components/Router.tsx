@@ -14,6 +14,8 @@ import { GoodsReceiptFormWrapper } from './goodsreceipt/GoodsReceiptFormWrapper'
 import { GoodsReceiptDetail } from './goodsreceipt/GoodsReceiptDetail'
 import { GoodsReceiptApproval } from './goodsreceipt/GoodsReceiptApproval'
 import { GoodsReceiptSubmit } from './goodsreceipt/GoodsReceiptSubmit'
+import { GoodsIssueManagement } from './goodsissue/GoodsIssueManagement'
+import { GoodsIssueFormWrapper } from './goodsissue/GoodsIssueFormWrapper'
 
 type RouteKey = 
   | 'dashboard' 
@@ -32,6 +34,8 @@ type RouteKey =
   | 'goodsreceipt/view'
   | 'goodsreceipt/approve'
   | 'goodsreceipt/submit'
+  | 'goodsissue'
+  | 'goodsissue/create'
 
 interface RouterProps {
   currentRoute: RouteKey
@@ -75,10 +79,14 @@ export function Router({ currentRoute }: RouterProps) {
       />
     case 'goodsreceipt/submit':
       const submitReceiptId = localStorage.getItem('submittingReceiptId')
-      return <GoodsReceiptSubmit 
-        receiptId={submitReceiptId || ''} 
-        onBack={() => window.location.hash = '#warehouse/goods-receipt'} 
+      return <GoodsReceiptSubmit
+        receiptId={submitReceiptId || ''}
+        onBack={() => window.location.hash = '#warehouse/goods-receipt'}
       />
+    case 'goodsissue':
+      return <GoodsIssueManagement />
+    case 'goodsissue/create':
+      return <GoodsIssueFormWrapper />
     case 'dashboard':
     default:
       return <MainContent />
@@ -109,6 +117,8 @@ export const useRouter = () => {
         'warehouse/goods-receipt/view': 'goodsreceipt/view',
         'warehouse/goods-receipt/approve': 'goodsreceipt/approve',
         'warehouse/goods-receipt/submit': 'goodsreceipt/submit',
+        'warehouse/goods-issue': 'goodsissue',
+        'warehouse/goods-issue/create': 'goodsissue/create',
         'dashboards': 'dashboard'
       }
       
@@ -141,7 +151,9 @@ export const useRouter = () => {
       'goodsreceipt/edit': '#warehouse/goods-receipt/edit',
       'goodsreceipt/view': '#warehouse/goods-receipt/view',
       'goodsreceipt/approve': '#warehouse/goods-receipt/approve',
-      'goodsreceipt/submit': '#warehouse/goods-receipt/submit'
+      'goodsreceipt/submit': '#warehouse/goods-receipt/submit',
+      'goodsissue': '#warehouse/goods-issue',
+      'goodsissue/create': '#warehouse/goods-issue/create'
     }
     
     window.location.hash = routeMap[route]
