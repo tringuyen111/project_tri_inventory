@@ -6,6 +6,7 @@ import { Router, useRouter } from "./components/Router"
 import { Toaster } from "./components/Toaster"
 import { ThemeProvider } from "./contexts/ThemeContext"
 import { LanguageProvider } from "./contexts/LanguageContext"
+import { GoodsIssueProvider } from "./contexts/GoodsIssueContext"
 
 function AppContent() {
   const { currentRoute } = useRouter()
@@ -27,13 +28,15 @@ export default function App() {
   return (
     <ThemeProvider>
       <LanguageProvider>
-        <TooltipProvider>
-          <SidebarProvider>
-            <AppContent />
-            <Toaster />
-          </SidebarProvider>
-        </TooltipProvider>
+        <GoodsIssueProvider>
+          <TooltipProvider>
+            <SidebarProvider>
+              <AppContent />
+              <Toaster />
+            </SidebarProvider>
+          </TooltipProvider>
+        </GoodsIssueProvider>
       </LanguageProvider>
     </ThemeProvider>
-  )  
+  )
 }
