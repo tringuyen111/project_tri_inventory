@@ -4,9 +4,6 @@ export const mockGoodsIssues: GoodsIssue[] = [
   {
     id: 'gi_2024_001',
     issue_no: 'GI-2024-001',
-    issue_type: 'Sales Order',
-    issue_method: 'Manual',
-    ref_no: 'SO-45829',
     status: 'Picking',
     partner_id: 'partner_acme',
     partner_code: 'ACME',
@@ -71,14 +68,6 @@ export const mockGoodsIssues: GoodsIssue[] = [
     approved_note: 'Approved with partial pick allowed.'
   },
   {
-    id: 'gi_2024_002',
-    issue_no: 'GI-2024-002',
-    issue_type: 'Transfer',
-    issue_method: 'System',
-    ref_no: 'TR-9088',
-    status: 'Picked',
-    partner_id: 'internal_transfer',
-    partner_code: 'ITR',
     partner_name: 'Internal Transfer',
     from_wh_id: 'wh_central',
     from_wh_code: 'CEN',
@@ -140,62 +129,12 @@ export const mockGoodsIssues: GoodsIssue[] = [
     approved_note: 'Auto approved by planning engine.'
   },
   {
-    id: 'gi_2024_003',
-    issue_no: 'GI-2024-003',
-    issue_type: 'Sales Order',
-    issue_method: 'Mobile',
-    ref_no: 'SO-45910',
-    status: 'Draft',
-    partner_id: 'partner_blue_ocean',
-    partner_code: 'BO-SUP',
-    partner_name: 'Blue Ocean Supermarket',
-    from_wh_id: 'wh_d7',
-    from_wh_code: 'D7',
-    from_wh_name: 'Warehouse District 7',
-    to_wh_id: 'wh_blue_ocean_govap',
-    to_wh_code: 'BO-GV',
-    to_wh_name: 'Blue Ocean - Go Vap',
-    expected_date: '2024-06-22',
-    remark: 'Draft created on mobile app - awaiting confirmation.',
+
     lines: [
       {
         id: 'gi_2024_003_line_1',
         issue_id: 'gi_2024_003',
         line_id: '1',
-        product_id: 'prod_4120',
-        product_code: 'NOODLES-SPICY',
-        sku: 'SKU-4120',
-        product_name: 'Instant Noodles Spicy',
-        uom_id: 'uom_case',
-        uom: 'case',
-        tracking_type: 'Lot',
-        planned_qty: 300,
-        picked_qty: 0
-      },
-      {
-        id: 'gi_2024_003_line_2',
-        issue_id: 'gi_2024_003',
-        line_id: '2',
-        product_id: 'prod_4150',
-        product_code: 'NOODLES-CHICKEN',
-        sku: 'SKU-4150',
-        product_name: 'Instant Noodles Chicken',
-        uom_id: 'uom_case',
-        uom: 'case',
-        tracking_type: 'Lot',
-        planned_qty: 300,
-        picked_qty: 0
-      }
-    ],
-    attachments: [],
-    created_at: '2024-06-16T13:25:00Z',
-    created_by: 'Vo Hoang C',
-    updated_at: '2024-06-16T13:25:00Z',
-    updated_by: 'Vo Hoang C'
-  },
-  {
-    id: 'gi_2024_004',
-    issue_no: 'GI-2024-004',
     issue_type: 'Manual',
     issue_method: 'Manual',
     ref_no: 'ADJ-775',
@@ -247,37 +186,11 @@ export const mockGoodsIssues: GoodsIssue[] = [
     approved_note: 'Confirmed destruction completed.'
   },
   {
-    id: 'gi_2024_005',
-    issue_no: 'GI-2024-005',
-    issue_type: 'Return',
-    issue_method: 'Manual',
-    ref_no: 'RTN-3305',
-    status: 'Cancelled',
-    partner_id: 'partner_urban_mini',
-    partner_code: 'UMM',
-    partner_name: 'Urban Mini Mart',
-    from_wh_id: 'wh_d9',
-    from_wh_code: 'D9',
-    from_wh_name: 'Warehouse District 9',
-    to_wh_id: 'wh_vendor_returns',
-    to_wh_code: 'RET',
-    to_wh_name: 'Vendor Returns',
-    expected_date: '2024-06-20',
-    remark: 'Return cancelled by vendor due to credit note dispute.',
     lines: [
       {
         id: 'gi_2024_005_line_1',
         issue_id: 'gi_2024_005',
         line_id: '1',
-        product_id: 'prod_5200',
-        product_code: 'YOGURT-STRAWBERRY-6PK',
-        sku: 'SKU-5200',
-        product_name: 'Yogurt Strawberry 6x100ml',
-        uom_id: 'uom_pack',
-        uom: 'pack',
-        tracking_type: 'Lot',
-        planned_qty: 200,
-        picked_qty: 0
       }
     ],
     attachments: [

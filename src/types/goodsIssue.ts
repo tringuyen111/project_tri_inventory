@@ -25,11 +25,6 @@ export interface GoodsIssueAttachment {
 export interface GoodsIssue {
   id: string
   issue_no: string
-  issue_type: 'Sales Order' | 'Transfer' | 'Return' | 'Manual'
-  issue_method: 'Manual' | 'System' | 'Mobile'
-  ref_no?: string
-  partner_id?: string
-  partner_code?: string
   partner_name?: string
   from_wh_id: string
   from_wh_code: string
