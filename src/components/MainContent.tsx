@@ -174,11 +174,17 @@ export function MainContent() {
           </CardHeader>
           <CardContent>
             <div className="grid gap-2">
-              <button className="flex items-center justify-start space-x-2 p-3 text-left hover:bg-accent rounded-md transition-colors">
+              <button
+                onClick={() => window.location.hash = '#warehouse/goods-receipt'}
+                className="flex items-center justify-start space-x-2 p-3 text-left hover:bg-accent rounded-md transition-colors"
+              >
                 <Package className="h-4 w-4" />
                 <span>Create Goods Receipt</span>
               </button>
-              <button className="flex items-center justify-start space-x-2 p-3 text-left hover:bg-accent rounded-md transition-colors">
+              <button
+                onClick={() => window.location.hash = '#warehouse/goods-issue'}
+                className="flex items-center justify-start space-x-2 p-3 text-left hover:bg-accent rounded-md transition-colors"
+              >
                 <TrendingUp className="h-4 w-4" />
                 <span>Process Goods Issue</span>
               </button>
