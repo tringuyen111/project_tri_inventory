@@ -259,7 +259,9 @@ export function LanguageProvider({ children }: { children: React.ReactNode }) {
   })
 
   const t = (key: string, params?: Record<string, string>): string => {
-    let translation = translations[language][key as keyof typeof translations[Language]] || key
+    const languageTranslations = translations[language] || translations.en
+    let translation =
+      languageTranslations[key as keyof typeof translations['en']] || key
     
     // Replace parameters in the translation string
     if (params && typeof translation === 'string') {
