@@ -1,18 +1,17 @@
 import { useState, useEffect, useRef } from 'react'
 import { useForm, useFieldArray } from 'react-hook-form@7.55.0'
-import { Plus, Trash2, Upload, Download, Save, Send, FileText, Info, X } from 'lucide-react'
+import { Plus, Upload, Download, Save, Send, FileText, Info, X } from 'lucide-react'
 import { Card, CardContent, CardHeader, CardTitle } from '../ui/card'
 import { Button } from '../ui/button'
 import { Input } from '../ui/input'
 import { Label } from '../ui/label'
-import { Textarea } from '../ui/textarea'
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '../ui/select'
 import { Badge } from '../ui/badge'
 import { Separator } from '../ui/separator'
 import { Alert, AlertDescription } from '../ui/alert'
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '../ui/tooltip'
 import { useLanguage } from '../../contexts/LanguageContext'
-import { GoodsReceipt, GoodsReceiptFormData, GoodsReceiptLine, GoodsReceiptImportData } from '../../types/goodsReceipt'
+import { GoodsReceipt, GoodsReceiptFormData } from '../../types/goodsReceipt'
 import { mockPartners } from '../../data/mockPartnerData'
 import { mockWarehouses } from '../../data/mockWarehouseData'
 import { mockModelAssets } from '../../data/mockModelAssetData'
@@ -21,7 +20,6 @@ import { generateReceiptNumber } from '../../data/mockGoodsReceiptData'
 import { WarehouseSelectWithSearch } from './WarehouseSelectWithSearch'
 import { AssetModelSelectWithSearch } from './AssetModelSelectWithSearch'
 import { PartnerSelectWithSearch } from './PartnerSelectWithSearch'
-import { UomSelectWithSearch } from './UomSelectWithSearch'
 
 const translations = {
   en: {
@@ -43,9 +41,9 @@ const translations = {
     exportLines: 'Export Lines',
     assetModel: 'Asset Model',
     unitOfMeasure: 'Unit of Measure',
+    unitOfMeasureAuto: 'Auto-filled from asset model',
     trackingType: 'Tracking Type',
     plannedQty: 'Planned Qty',
-    lineNote: 'Line Note',
     
     // Actions
     saveDraft: 'Save Draft',
@@ -85,18 +83,16 @@ const translations = {
     // Tooltips
     receiptNoTooltip: 'Auto-generated when saving draft first time. Format: GR-[WHCODE]-[YYYYMM]-[seq]',
     trackingTooltip: 'Tracking type is automatically set from Asset Model and cannot be changed',
-    importTooltip: 'Import lines from CSV/XLSX. Required columns: model_code, uom_code, tracking_type, qty_planned',
+    importTooltip: 'Import lines from CSV/XLSX. Required columns: model_code, qty_planned',
     
     // Placeholders
     selectReceiptType: 'Select receipt type',
     selectPartner: 'Select partner',
     selectWarehouse: 'Select warehouse',
     selectAssetModel: 'Select asset model',
-    selectUoM: 'Select unit of measure',
     enterReference: 'Enter reference number',
     enterQuantity: 'Enter quantity',
     enterRemarks: 'Enter remarks...',
-    enterLineNote: 'Enter line note...',
     
     // Messages
     noLines: 'No lines added yet. Add lines or import from template.',
@@ -122,9 +118,9 @@ const translations = {
     exportLines: 'Xuất Dòng',
     assetModel: 'Mẫu Tài Sản',
     unitOfMeasure: 'Đơn Vị Tính',
+    unitOfMeasureAuto: 'Tự động lấy từ Mẫu Tài Sản',
     trackingType: 'Loại Theo Dõi',
     plannedQty: 'SL Dự Kiến',
-    lineNote: 'Ghi Chú Dòng',
     
     // Actions
     saveDraft: 'Lưu Nháp',
@@ -164,18 +160,16 @@ const translations = {
     // Tooltips
     receiptNoTooltip: 'Tự động tạo khi lưu nháp lần đầu. Định dạng: GR-[WHCODE]-[YYYYMM]-[seq]',
     trackingTooltip: 'Loại theo dõi được tự động thiết lập từ Mẫu Tài Sản và không thể thay đổi',
-    importTooltip: 'Nhập dòng từ CSV/XLSX. Cột bắt buộc: model_code, uom_code, tracking_type, qty_planned',
+    importTooltip: 'Nhập dòng từ CSV/XLSX. Cột bắt buộc: model_code, qty_planned',
     
     // Placeholders
     selectReceiptType: 'Chọn loại phiếu',
     selectPartner: 'Chọn đối tác',
     selectWarehouse: 'Chọn kho',
     selectAssetModel: 'Chọn mẫu tài sản',
-    selectUoM: 'Chọn đơn vị tính',
     enterReference: 'Nhập số tham chiếu',
     enterQuantity: 'Nhập số lượng',
     enterRemarks: 'Nhập ghi chú...',
-    enterLineNote: 'Nhập ghi chú dòng...',
     
     // Messages
     noLines: 'Chưa có dòng nào. Thêm dòng hoặc nhập từ mẫu.',
@@ -212,8 +206,7 @@ export function GoodsReceiptForm({ receipt, viewMode = false, onSuccess, onCance
         model_id: line.model_id,
         uom_id: line.uom_id,
         tracking_type: line.tracking_type,
-        qty_planned: line.qty_planned,
-        note: line.note || ''
+        qty_planned: line.qty_planned
       })) || [],
       attachments: []
     }
@@ -245,8 +238,7 @@ export function GoodsReceiptForm({ receipt, viewMode = false, onSuccess, onCance
       model_id: '',
       uom_id: '',
       tracking_type: 'None',
-      qty_planned: 1,
-      note: ''
+      qty_planned: 1
     })
     
     // Scroll to the add line button after a brief delay to allow render
@@ -259,21 +251,26 @@ export function GoodsReceiptForm({ receipt, viewMode = false, onSuccess, onCance
   }
 
   const handleModelChange = (lineIndex: number, modelId: string) => {
+    setValue(`lines.${lineIndex}.model_id`, modelId)
     const selectedModel = mockModelAssets.find(m => m.id === modelId)
     if (selectedModel) {
-      setValue(`lines.${lineIndex}.model_id`, modelId)
       setValue(`lines.${lineIndex}.tracking_type`, selectedModel.tracking_type)
-      // Clear UoM when model changes
+      const matchedUom = mockUoMs.find(u => u.uom_code === selectedModel.uom_code)
+      setValue(`lines.${lineIndex}.uom_id`, matchedUom?.id || '')
+    } else {
+      setValue(`lines.${lineIndex}.tracking_type`, 'None')
       setValue(`lines.${lineIndex}.uom_id`, '')
     }
   }
 
   const downloadTemplate = () => {
-    const csvContent = 'data:text/csv;charset=utf-8,' + 
-      'model_code,uom_code,tracking_type,qty_planned,note,serial_list,lot_no,mfg_date,exp_date\n' +
-      'LAP001,PCS,Serial,5,High priority items,,,\n' +
-      'MSE001,PCS,Lot,20,,,\"LOT2024001\",\n' +
-      'CBL001,PCS,None,50,,,,\n'
+    const csvContent = 'data:text/csv;charset=utf-8,' +
+      [
+        'model_code,qty_planned,serial_list,lot_no,mfg_date,exp_date',
+        'LAP001,5,,,,',
+        'MSE001,20,,LOT2024001,,',
+        'CBL001,50,,,,'
+      ].join('\n')
     
     const encodedUri = encodeURI(csvContent)
     const link = document.createElement('a')
@@ -288,7 +285,7 @@ export function GoodsReceiptForm({ receipt, viewMode = false, onSuccess, onCance
     const currentLines = watch('lines')
     const csvContent = 'data:text/csv;charset=utf-8,' + 
       [
-        'model_code,uom_code,tracking_type,qty_planned,note',
+        'model_code,uom_code,tracking_type,qty_planned',
         ...currentLines.map(line => {
           const model = mockModelAssets.find(m => m.id === line.model_id)
           const uom = mockUoMs.find(u => u.id === line.uom_id)
@@ -296,8 +293,7 @@ export function GoodsReceiptForm({ receipt, viewMode = false, onSuccess, onCance
             model?.model_code || '',
             uom?.uom_code || '',
             line.tracking_type,
-            line.qty_planned,
-            line.note || ''
+            line.qty_planned
           ].join(',')
         })
       ].join('\n')
@@ -331,20 +327,19 @@ export function GoodsReceiptForm({ receipt, viewMode = false, onSuccess, onCance
               lineData[header] = values[index] || ''
             })
             return lineData
-          })
-          .filter(lineData => lineData.model_code && lineData.uom_code)
+            })
+            .filter(lineData => lineData.model_code)
 
         // Convert imported data to form format
         const formLines = importedLines.map((lineData: any) => {
           const model = mockModelAssets.find(m => m.model_code === lineData.model_code)
-          const uom = mockUoMs.find(u => u.uom_code === lineData.uom_code)
-          
+          const uom = model ? mockUoMs.find(u => u.uom_code === model.uom_code) : undefined
+
           return {
             model_id: model?.id || '',
             uom_id: uom?.id || '',
-            tracking_type: lineData.tracking_type || 'None',
-            qty_planned: parseFloat(lineData.qty_planned) || 1,
-            note: lineData.note || ''
+            tracking_type: model?.tracking_type || 'None',
+            qty_planned: parseFloat(lineData.qty_planned) || 1
           }
         }).filter(line => line.model_id && line.uom_id)
 
@@ -421,8 +416,7 @@ export function GoodsReceiptForm({ receipt, viewMode = false, onSuccess, onCance
           uom_code: uom?.uom_code || '',
           uom_name: uom?.uom_name || '',
           tracking_type: line.tracking_type,
-          qty_planned: line.qty_planned,
-          note: line.note
+          qty_planned: line.qty_planned
         }
       }),
       attachments: [],
@@ -536,12 +530,6 @@ export function GoodsReceiptForm({ receipt, viewMode = false, onSuccess, onCance
                       <p className="font-mono">{line.qty_planned.toLocaleString()}</p>
                     </div>
                   </div>
-                  {line.note && (
-                    <div className="mt-2">
-                      <Label className="text-xs text-muted-foreground">{t.lineNote}</Label>
-                      <p className="text-sm">{line.note}</p>
-                    </div>
-                  )}
                 </Card>
               ))}
             </div>
@@ -795,13 +783,22 @@ export function GoodsReceiptForm({ receipt, viewMode = false, onSuccess, onCance
                         />
                       </div>
 
-                      {/* Unit of Measure Selection */}
+                      {/* Unit of Measure (Auto-filled) */}
                       <div className="space-y-2">
                         <Label className="text-sm">{t.unitOfMeasure} *</Label>
-                        <UomSelectWithSearch
+                        <Input
+                          value={(() => {
+                            const uomId = watch(`lines.${index}.uom_id`)
+                            const uom = mockUoMs.find(u => u.id === uomId)
+                            return uom ? `${uom.uom_code} - ${uom.uom_name}` : t.unitOfMeasureAuto
+                          })()}
+                          disabled
+                          className="bg-muted"
+                        />
+                        <input
+                          type="hidden"
+                          {...register(`lines.${index}.uom_id`)}
                           value={watch(`lines.${index}.uom_id`)}
-                          onValueChange={(value) => setValue(`lines.${index}.uom_id`, value)}
-                          placeholder={t.selectUoM}
                         />
                       </div>
 
@@ -849,16 +846,6 @@ export function GoodsReceiptForm({ receipt, viewMode = false, onSuccess, onCance
                       </div>
                     </div>
 
-                    {/* Line Note - Full Width */}
-                    <div className="mt-4 space-y-2">
-                      <Label className="text-sm">{t.lineNote}</Label>
-                      <Textarea
-                        {...register(`lines.${index}.note`)}
-                        placeholder={t.enterLineNote}
-                        rows={2}
-                        className="resize-none"
-                      />
-                    </div>
                   </Card>
                 )
               })}
