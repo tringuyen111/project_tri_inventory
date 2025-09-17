@@ -3,6 +3,7 @@ import { MainContent } from './MainContent'
 import { OrganizationManagement } from './organization/OrganizationManagement'
 import { BranchManagement } from './branch/BranchManagement'
 import { WarehouseManagement } from './warehouse/WarehouseManagement'
+import { GoodsIssueManagement } from './warehouse/GoodsIssueManagement'
 import { LocationManagement } from './location/LocationManagement'
 import { UoMManagement } from './uom/UoMManagement'
 import { PartnerManagement } from './partner/PartnerManagement'
@@ -27,6 +28,7 @@ type RouteKey =
   | 'modelasset'
   | 'stockonhand'
   | 'goodsreceipt'
+  | 'goodsissue'
   | 'goodsreceipt/create'
   | 'goodsreceipt/edit'
   | 'goodsreceipt/view'
@@ -59,6 +61,8 @@ export function Router({ currentRoute }: RouterProps) {
       return <StockOnhandManagement />
     case 'goodsreceipt':
       return <GoodsReceiptManagement />
+    case 'goodsissue':
+      return <GoodsIssueManagement />
     case 'goodsreceipt/create':
       return <GoodsReceiptFormWrapper mode="create" />
     case 'goodsreceipt/edit':
@@ -104,6 +108,7 @@ export const useRouter = () => {
         'assets/modelasset': 'modelasset',
         'warehouse/stock-onhand': 'stockonhand',
         'warehouse/goods-receipt': 'goodsreceipt',
+        'warehouse/goods-issue': 'goodsissue',
         'warehouse/goods-receipt/create': 'goodsreceipt/create',
         'warehouse/goods-receipt/edit': 'goodsreceipt/edit',
         'warehouse/goods-receipt/view': 'goodsreceipt/view',
@@ -137,6 +142,7 @@ export const useRouter = () => {
       'modelasset': '#assets/modelasset',
       'stockonhand': '#warehouse/stock-onhand',
       'goodsreceipt': '#warehouse/goods-receipt',
+      'goodsissue': '#warehouse/goods-issue',
       'goodsreceipt/create': '#warehouse/goods-receipt/create',
       'goodsreceipt/edit': '#warehouse/goods-receipt/edit',
       'goodsreceipt/view': '#warehouse/goods-receipt/view',
