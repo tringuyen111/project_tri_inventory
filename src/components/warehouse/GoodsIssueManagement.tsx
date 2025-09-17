@@ -33,11 +33,14 @@ const translations = {
     clearFilters: 'Clear Filters',
     issueNo: 'GI Number',
     issueType: 'Type',
+    issueMethod: 'Method',
     partner: 'Partner / Destination',
     fromWarehouse: 'From Warehouse',
     toWarehouse: 'To Warehouse',
     expectedDate: 'Expected Date',
     status: 'Status',
+    attachments: 'Attachments',
+    remark: 'Remark',
     totalPlanned: 'Total Planned',
     totalPicked: 'Total Picked',
     totalDiff: 'Difference',
@@ -59,11 +62,14 @@ const translations = {
     clearFilters: 'Xóa lọc',
     issueNo: 'Số phiếu',
     issueType: 'Loại',
+    issueMethod: 'Phương thức',
     partner: 'Đối tác / Điểm đến',
     fromWarehouse: 'Kho xuất',
     toWarehouse: 'Kho nhận',
     expectedDate: 'Ngày dự kiến',
     status: 'Trạng thái',
+    attachments: 'Tệp đính kèm',
+    remark: 'Ghi chú',
     totalPlanned: 'Tổng kế hoạch',
     totalPicked: 'Tổng đã soạn',
     totalDiff: 'Chênh lệch',
@@ -136,9 +142,14 @@ export function GoodsIssueManagement() {
         !search ||
         issue.issue_no.toLowerCase().includes(search) ||
         issue.partner_name?.toLowerCase().includes(search) ||
+        issue.partner_code?.toLowerCase().includes(search) ||
+        issue.issue_method.toLowerCase().includes(search) ||
         issue.from_wh_name.toLowerCase().includes(search) ||
+        issue.from_wh_code.toLowerCase().includes(search) ||
         issue.to_wh_name?.toLowerCase().includes(search) ||
-        issue.created_by.toLowerCase().includes(search)
+        issue.to_wh_code?.toLowerCase().includes(search) ||
+        issue.created_by.toLowerCase().includes(search) ||
+        issue.remark?.toLowerCase().includes(search)
 
       const matchesStatus = statusFilter === 'all' || issue.status === statusFilter
       const matchesType = typeFilter === 'all' || issue.issue_type === typeFilter
@@ -248,7 +259,8 @@ export function GoodsIssueManagement() {
                 <TableRow>
                   <TableHead className="min-w-[200px]">{t.issueNo}</TableHead>
                   <TableHead>{t.issueType}</TableHead>
-                  <TableHead className="min-w-[180px]">{t.partner}</TableHead>
+                  <TableHead>{t.issueMethod}</TableHead>
+                  <TableHead className="min-w-[200px]">{t.partner}</TableHead>
                   <TableHead className="min-w-[160px]">{t.fromWarehouse}</TableHead>
                   <TableHead className="min-w-[160px]">{t.toWarehouse}</TableHead>
                   <TableHead>{t.expectedDate}</TableHead>
@@ -256,6 +268,8 @@ export function GoodsIssueManagement() {
                   <TableHead className="text-right">{t.totalPlanned}</TableHead>
                   <TableHead className="text-right">{t.totalPicked}</TableHead>
                   <TableHead className="text-right">{t.totalDiff}</TableHead>
+                  <TableHead>{t.attachments}</TableHead>
+                  <TableHead className="min-w-[200px]">{t.remark}</TableHead>
                   <TableHead>{t.createdAt}</TableHead>
                   <TableHead>{t.createdBy}</TableHead>
                 </TableRow>
@@ -263,7 +277,7 @@ export function GoodsIssueManagement() {
               <TableBody>
                 {filteredIssues.length === 0 && (
                   <TableRow>
-                    <TableCell colSpan={12} className="py-8 text-center text-muted-foreground">
+                    <TableCell colSpan={15} className="py-8 text-center text-muted-foreground">
                       {t.noResults}
                     </TableCell>
                   </TableRow>
@@ -278,6 +292,9 @@ export function GoodsIssueManagement() {
                       <TableCell>
                         <div className="flex flex-col gap-1">
                           <span className="font-medium">{issue.issue_no}</span>
+                          {issue.ref_no && (
+                            <span className="text-xs text-muted-foreground">Ref: {issue.ref_no}</span>
+                          )}
                           <span className="text-xs text-muted-foreground">
                             {t.summaryTotals(totals.planned, totals.picked, difference)}
                           </span>
@@ -285,12 +302,34 @@ export function GoodsIssueManagement() {
                       </TableCell>
                       <TableCell>{issue.issue_type}</TableCell>
                       <TableCell>
+                        <Badge variant="outline" className="uppercase tracking-wide">
+                          {issue.issue_method}
+                        </Badge>
+                      </TableCell>
+                      <TableCell>
                         <div className="flex flex-col">
                           <span>{issue.partner_name || '—'}</span>
+                          {(issue.partner_code || issue.partner_id) && (
+                            <span className="text-xs text-muted-foreground">
+                              {issue.partner_code || issue.partner_id}
+                            </span>
+                          )}
                         </div>
                       </TableCell>
-                      <TableCell>{issue.from_wh_name}</TableCell>
-                      <TableCell>{issue.to_wh_name || '—'}</TableCell>
+                      <TableCell>
+                        <div className="flex flex-col">
+                          <span>{issue.from_wh_name}</span>
+                          <span className="text-xs text-muted-foreground">{issue.from_wh_code}</span>
+                        </div>
+                      </TableCell>
+                      <TableCell>
+                        <div className="flex flex-col">
+                          <span>{issue.to_wh_name || '—'}</span>
+                          {issue.to_wh_code && (
+                            <span className="text-xs text-muted-foreground">{issue.to_wh_code}</span>
+                          )}
+                        </div>
+                      </TableCell>
                       <TableCell>{formatDate(issue.expected_date)}</TableCell>
                       <TableCell>
                         <Badge className={statusColors[issue.status]}>{issue.status}</Badge>
@@ -299,6 +338,16 @@ export function GoodsIssueManagement() {
                       <TableCell className="text-right">{totals.picked.toLocaleString()}</TableCell>
                       <TableCell className={`text-right ${difference !== 0 ? 'text-red-500 dark:text-red-400' : ''}`}>
                         {difference.toLocaleString()}
+                      </TableCell>
+                      <TableCell>
+                        {issue.attachments.length > 0 ? (
+                          <span>{issue.attachments.length}</span>
+                        ) : (
+                          <span className="text-muted-foreground">—</span>
+                        )}
+                      </TableCell>
+                      <TableCell className="max-w-[260px] whitespace-pre-line text-sm text-muted-foreground">
+                        {issue.remark || '—'}
                       </TableCell>
                       <TableCell>{formatDate(issue.created_at, true)}</TableCell>
                       <TableCell>{issue.created_by}</TableCell>
