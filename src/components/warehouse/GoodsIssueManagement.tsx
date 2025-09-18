@@ -1,3 +1,5 @@
+import { useEffect, useMemo, useState } from 'react'
+
 import { Plus, Search, Filter } from 'lucide-react'
 
 import { Card, CardContent, CardHeader, CardTitle } from '../ui/card'
@@ -10,6 +12,52 @@ import { Badge } from '../ui/badge'
 import { mockGoodsIssues } from '../../data/mockGoodsIssueData'
 import { GoodsIssue } from '../../types/goodsIssue'
 import { useLanguage } from '../../contexts/LanguageContext'
+
+const GOODS_ISSUE_STORAGE_KEY = 'tri:goods-issues'
+const mockIssueNumbers = new Set(mockGoodsIssues.map(issue => issue.issue_no))
+
+const loadStoredGoodsIssues = (): GoodsIssue[] => {
+  if (typeof window === 'undefined') {
+    return []
+  }
+
+  try {
+    const storedValue = window.localStorage.getItem(GOODS_ISSUE_STORAGE_KEY)
+    if (!storedValue) {
+      return []
+    }
+
+    const parsed = JSON.parse(storedValue) as unknown
+    if (!Array.isArray(parsed)) {
+      return []
+    }
+
+    return parsed.filter((issue): issue is GoodsIssue => {
+      return (
+        issue !== null &&
+        typeof issue === 'object' &&
+        typeof issue.issue_no === 'string' &&
+        Array.isArray(issue.lines)
+      )
+    })
+  } catch (error) {
+    console.warn('Unable to load stored goods issues', error)
+    return []
+  }
+}
+
+const mergeIssues = (stored: GoodsIssue[]): GoodsIssue[] => {
+  const combined = [...stored, ...mockGoodsIssues]
+  const seen = new Set<string>()
+
+  return combined.filter(issue => {
+    if (seen.has(issue.issue_no)) {
+      return false
+    }
+    seen.add(issue.issue_no)
+    return true
+  })
+}
 
 const statusColors: Record<GoodsIssue['status'], string> = {
   Draft: 'bg-gray-100 text-gray-800 dark:bg-gray-800 dark:text-gray-200',
@@ -114,7 +162,7 @@ const calculateTotals = (issue: GoodsIssue) => {
 
 export function GoodsIssueManagement() {
   const { language } = useLanguage()
-  const [issues, setIssues] = useState<GoodsIssue[]>(mockGoodsIssues)
+  const [issues, setIssues] = useState<GoodsIssue[]>(() => mergeIssues(loadStoredGoodsIssues()))
   const [searchTerm, setSearchTerm] = useState('')
   const [statusFilter, setStatusFilter] = useState<string>('all')
   const [typeFilter, setTypeFilter] = useState<string>('all')
@@ -140,6 +188,20 @@ export function GoodsIssueManagement() {
     window.addEventListener('goods-issue-created', listener)
     return () => window.removeEventListener('goods-issue-created', listener)
   }, [])
+
+  useEffect(() => {
+    if (typeof window === 'undefined') {
+      return
+    }
+
+    const issuesToPersist = issues.filter(issue => !mockIssueNumbers.has(issue.issue_no))
+
+    try {
+      window.localStorage.setItem(GOODS_ISSUE_STORAGE_KEY, JSON.stringify(issuesToPersist))
+    } catch (error) {
+      console.warn('Unable to persist goods issues', error)
+    }
+  }, [issues])
 
 
   const selectedLanguage: keyof typeof translations = language in translations ? language : 'en'

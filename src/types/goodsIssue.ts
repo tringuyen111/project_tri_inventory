@@ -5,6 +5,8 @@ export interface GoodsIssueLine {
   planned_qty: number
   picked_qty: number
   uom: string
+  tracking_type?: 'None' | 'Lot' | 'Serial'
+  tracking_number?: string
 }
 
 export interface GoodsIssue {
