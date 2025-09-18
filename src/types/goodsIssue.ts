@@ -19,6 +19,9 @@ export interface GoodsIssue {
     | 'Completed'
     | 'Cancelled'
   partner_name?: string
+  related_entry?: string
+  partner_address?: string
+  remarks?: string
   from_wh_name: string
   to_wh_name?: string
   expected_date: string

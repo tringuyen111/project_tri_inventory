@@ -1,3 +1,4 @@
+import { useEffect, useMemo, useState } from 'react'
 import { Plus, Search, Filter } from 'lucide-react'
 
 import { Card, CardContent, CardHeader, CardTitle } from '../ui/card'
@@ -49,6 +50,9 @@ const translations = {
     createdBy: 'Created By',
     summaryTotals: (planned: number, picked: number, diff: number) =>
       `Planned: ${planned.toLocaleString()} • Picked: ${picked.toLocaleString()} • Diff: ${diff.toLocaleString()}`,
+    relatedEntryLabel: (entry: string) => `Related: ${entry}`,
+    partnerAddressLabel: (address: string) => `Address: ${address}`,
+    remarksLabel: (remarks: string) => `Remarks: ${remarks}`,
     noResults: 'No goods issues found'
   },
   vn: {
@@ -76,6 +80,9 @@ const translations = {
     createdBy: 'Người tạo',
     summaryTotals: (planned: number, picked: number, diff: number) =>
       `Kế hoạch: ${planned.toLocaleString()} • Đã soạn: ${picked.toLocaleString()} • Chênh: ${diff.toLocaleString()}`,
+    relatedEntryLabel: (entry: string) => `Liên quan: ${entry}`,
+    partnerAddressLabel: (address: string) => `Địa chỉ: ${address}`,
+    remarksLabel: (remarks: string) => `Ghi chú: ${remarks}`,
     noResults: 'Không có phiếu xuất kho'
   }
 }
@@ -162,8 +169,11 @@ export function GoodsIssueManagement() {
         !search ||
         issue.issue_no.toLowerCase().includes(search) ||
         issue.partner_name?.toLowerCase().includes(search) ||
+        issue.partner_address?.toLowerCase().includes(search) ||
         issue.from_wh_name.toLowerCase().includes(search) ||
         issue.to_wh_name?.toLowerCase().includes(search) ||
+        issue.related_entry?.toLowerCase().includes(search) ||
+        issue.remarks?.toLowerCase().includes(search) ||
         issue.created_by.toLowerCase().includes(search)
 
       const matchesStatus = statusFilter === 'all' || issue.status === statusFilter
@@ -319,12 +329,27 @@ export function GoodsIssueManagement() {
                           <span className="text-xs text-muted-foreground">
                             {t.summaryTotals(totals.planned, totals.picked, difference)}
                           </span>
+                          {issue.related_entry && (
+                            <span className="text-xs text-muted-foreground">
+                              {t.relatedEntryLabel(issue.related_entry)}
+                            </span>
+                          )}
                         </div>
                       </TableCell>
                       <TableCell>{issue.issue_type}</TableCell>
                       <TableCell>
                         <div className="flex flex-col">
                           <span>{issue.partner_name || '—'}</span>
+                          {issue.partner_address && (
+                            <span className="text-xs text-muted-foreground">
+                              {t.partnerAddressLabel(issue.partner_address)}
+                            </span>
+                          )}
+                          {issue.remarks && (
+                            <span className="text-xs italic text-muted-foreground">
+                              {t.remarksLabel(issue.remarks)}
+                            </span>
+                          )}
                         </div>
                       </TableCell>
                       <TableCell>{issue.from_wh_name}</TableCell>
