@@ -9,6 +9,7 @@ import { Badge } from '../ui/badge'
 
 import { mockGoodsIssues } from '../../data/mockGoodsIssueData'
 import { GoodsIssue } from '../../types/goodsIssue'
+import { GOODS_ISSUE_STORAGE_KEY, loadStoredGoodsIssues } from '../../utils/goodsIssueStorage'
 import { useLanguage } from '../../contexts/LanguageContext'
 
 const statusColors: Record<GoodsIssue['status'], string> = {
@@ -112,9 +113,24 @@ const calculateTotals = (issue: GoodsIssue) => {
   )
 }
 
+const mergeGoodsIssues = (...lists: GoodsIssue[][]) => {
+  const seen = new Set<string>()
+  const merged: GoodsIssue[] = []
+
+  lists.forEach(list => {
+    list.forEach(issue => {
+      if (!seen.has(issue.issue_no)) {
+        merged.push(issue)
+        seen.add(issue.issue_no)
+      }
+    })
+  })
+
+  return merged
+}
+
 export function GoodsIssueManagement() {
   const { language } = useLanguage()
-  const [issues, setIssues] = useState<GoodsIssue[]>(mockGoodsIssues)
   const [searchTerm, setSearchTerm] = useState('')
   const [statusFilter, setStatusFilter] = useState<string>('all')
   const [typeFilter, setTypeFilter] = useState<string>('all')
@@ -128,17 +144,6 @@ export function GoodsIssueManagement() {
       if (!detail) {
         return
       }
-
-      setIssues(prev => {
-        if (prev.some(issue => issue.issue_no === detail.issue_no)) {
-          return prev
-        }
-        return [detail, ...prev]
-      })
-    }
-
-    window.addEventListener('goods-issue-created', listener)
-    return () => window.removeEventListener('goods-issue-created', listener)
   }, [])
 
 
