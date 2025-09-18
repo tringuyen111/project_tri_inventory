@@ -1,4 +1,3 @@
-import { useMemo, useState } from 'react'
 import { Plus, Search, Filter } from 'lucide-react'
 
 import { Card, CardContent, CardHeader, CardTitle } from '../ui/card'
@@ -115,12 +114,33 @@ const calculateTotals = (issue: GoodsIssue) => {
 
 export function GoodsIssueManagement() {
   const { language } = useLanguage()
-  const [issues] = useState<GoodsIssue[]>(mockGoodsIssues)
+  const [issues, setIssues] = useState<GoodsIssue[]>(mockGoodsIssues)
   const [searchTerm, setSearchTerm] = useState('')
   const [statusFilter, setStatusFilter] = useState<string>('all')
   const [typeFilter, setTypeFilter] = useState<string>('all')
   const [startDate, setStartDate] = useState('')
   const [endDate, setEndDate] = useState('')
+
+  useEffect(() => {
+    const listener = (event: Event) => {
+      const customEvent = event as CustomEvent<GoodsIssue>
+      const detail = customEvent.detail
+      if (!detail) {
+        return
+      }
+
+      setIssues(prev => {
+        if (prev.some(issue => issue.issue_no === detail.issue_no)) {
+          return prev
+        }
+        return [detail, ...prev]
+      })
+    }
+
+    window.addEventListener('goods-issue-created', listener)
+    return () => window.removeEventListener('goods-issue-created', listener)
+  }, [])
+
 
   const selectedLanguage: keyof typeof translations = language in translations ? language : 'en'
   const t = translations[selectedLanguage]
