@@ -1,4 +1,3 @@
-import { useEffect, useMemo, useState } from 'react'
 import { Plus, Search, Filter } from 'lucide-react'
 
 import { Card, CardContent, CardHeader, CardTitle } from '../ui/card'
@@ -132,9 +131,6 @@ const mergeGoodsIssues = (...lists: GoodsIssue[][]) => {
 
 export function GoodsIssueManagement() {
   const { language } = useLanguage()
-  const [issues, setIssues] = useState<GoodsIssue[]>(() =>
-    mergeGoodsIssues(loadStoredGoodsIssues(), mockGoodsIssues)
-  )
   const [searchTerm, setSearchTerm] = useState('')
   const [statusFilter, setStatusFilter] = useState<string>('all')
   const [typeFilter, setTypeFilter] = useState<string>('all')
@@ -148,25 +144,6 @@ export function GoodsIssueManagement() {
       if (!detail) {
         return
       }
-
-      setIssues(prev => mergeGoodsIssues([detail], prev))
-    }
-
-    window.addEventListener('goods-issue-created', listener)
-    const handleStorage = (event: StorageEvent) => {
-      if (event.key && event.key !== GOODS_ISSUE_STORAGE_KEY) {
-        return
-      }
-
-      setIssues(mergeGoodsIssues(loadStoredGoodsIssues(), mockGoodsIssues))
-    }
-
-    window.addEventListener('storage', handleStorage)
-
-    return () => {
-      window.removeEventListener('goods-issue-created', listener)
-      window.removeEventListener('storage', handleStorage)
-    }
   }, [])
 
 
