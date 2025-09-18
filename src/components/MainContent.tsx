@@ -79,6 +79,35 @@ export function MainContent() {
     }
   ]
 
+  const handleNavigation = (path: string) => {
+    if (!path) return
+
+    window.location.hash = path.startsWith('/') ? path.slice(1) : path
+  }
+
+  const quickActions = [
+    {
+      icon: Package,
+      label: "Create Goods Receipt",
+      onClick: () => handleNavigation("/warehouse/goods-receipt/create")
+    },
+    {
+      icon: TrendingUp,
+      label: "Process Goods Issue",
+      onClick: () => handleNavigation("/warehouse/goods-issue")
+    },
+    {
+      icon: BarChart3,
+      label: "Start Inventory Count",
+      onClick: () => handleNavigation("/warehouse/stock-onhand")
+    },
+    {
+      icon: Warehouse,
+      label: "View Stock Levels",
+      onClick: () => handleNavigation("/warehouse/stock-onhand")
+    }
+  ]
+
   return (
     <div className="p-6 space-y-6">
       {/* Welcome Section */}
@@ -174,22 +203,17 @@ export function MainContent() {
           </CardHeader>
           <CardContent>
             <div className="grid gap-2">
-              <button className="flex items-center justify-start space-x-2 p-3 text-left hover:bg-accent rounded-md transition-colors">
-                <Package className="h-4 w-4" />
-                <span>Create Goods Receipt</span>
-              </button>
-              <button className="flex items-center justify-start space-x-2 p-3 text-left hover:bg-accent rounded-md transition-colors">
-                <TrendingUp className="h-4 w-4" />
-                <span>Process Goods Issue</span>
-              </button>
-              <button className="flex items-center justify-start space-x-2 p-3 text-left hover:bg-accent rounded-md transition-colors">
-                <BarChart3 className="h-4 w-4" />
-                <span>Start Inventory Count</span>
-              </button>
-              <button className="flex items-center justify-start space-x-2 p-3 text-left hover:bg-accent rounded-md transition-colors">
-                <Warehouse className="h-4 w-4" />
-                <span>View Stock Levels</span>
-              </button>
+              {quickActions.map(action => (
+                <button
+                  key={action.label}
+                  type="button"
+                  onClick={action.onClick}
+                  className="flex items-center justify-start space-x-2 rounded-md p-3 text-left transition-colors hover:bg-accent"
+                >
+                  <action.icon className="h-4 w-4" />
+                  <span>{action.label}</span>
+                </button>
+              ))}
             </div>
           </CardContent>
         </Card>
