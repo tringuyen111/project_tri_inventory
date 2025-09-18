@@ -1,5 +1,5 @@
 import { useMemo, useState } from 'react'
-import { Search, Filter } from 'lucide-react'
+import { Plus, Search, Filter } from 'lucide-react'
 
 import { Card, CardContent, CardHeader, CardTitle } from '../ui/card'
 import { Button } from '../ui/button'
@@ -28,6 +28,7 @@ const translations = {
   en: {
     title: 'Goods Issue Management',
     description: 'Review and manage goods issues, monitor picking progress, and track fulfillment accuracy.',
+    create: 'Create Goods Issue',
     searchPlaceholder: 'Search GI number, partner or warehouse...',
     statusFilter: 'Status',
     typeFilter: 'Type',
@@ -54,6 +55,7 @@ const translations = {
   vn: {
     title: 'Quản Lý Phiếu Xuất Kho',
     description: 'Theo dõi phiếu xuất kho, tình trạng soạn hàng và độ chính xác thực hiện.',
+    create: 'Tạo Phiếu Xuất Kho',
     searchPlaceholder: 'Tìm số phiếu, đối tác hoặc kho...',
     statusFilter: 'Trạng thái',
     typeFilter: 'Loại',
@@ -175,12 +177,24 @@ export function GoodsIssueManagement() {
     setEndDate('')
   }
 
+  const handleCreateGoodsIssue = () => {
+    window.location.hash = '#warehouse/goods-issue/create'
+  }
+
   return (
     <div className="space-y-6">
       <Card>
         <CardHeader className="pb-4">
-          <CardTitle className="text-2xl font-semibold">{t.title}</CardTitle>
-          <p className="text-sm text-muted-foreground">{t.description}</p>
+          <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+            <div>
+              <CardTitle className="text-2xl font-semibold">{t.title}</CardTitle>
+              <p className="text-sm text-muted-foreground">{t.description}</p>
+            </div>
+            <Button onClick={handleCreateGoodsIssue}>
+              <Plus className="mr-2 h-4 w-4" />
+              {t.create}
+            </Button>
+          </div>
         </CardHeader>
         <CardContent className="space-y-4">
           <div className="flex flex-col gap-3 lg:flex-row lg:items-center lg:justify-between">
