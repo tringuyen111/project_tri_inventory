@@ -115,7 +115,7 @@ const translations = {
     cancelled: 'Cancelled',
     reversed: 'Reversed'
   },
-  vn: {
+  vi: {
     title: 'Phê Duyệt Phiếu Nhập Kho',
     back: 'Quay Lại Danh Sách',
     receiptNo: 'Số Phiếu',
@@ -279,11 +279,11 @@ export function GoodsReceiptApproval({ receiptId, onBack }: GoodsReceiptApproval
   const canApprove = receipt.status === 'Submitted' && blockingWarnings.length === 0
 
   const formatDate = (dateString: string) => {
-    return new Date(dateString).toLocaleString(language === 'vn' ? 'vi-VN' : 'en-US')
+    return new Date(dateString).toLocaleString(language === 'vi' ? 'vi-VN' : 'en-US')
   }
 
   const formatDateOnly = (dateString: string) => {
-    return new Date(dateString).toLocaleDateString(language === 'vn' ? 'vi-VN' : 'en-US')
+    return new Date(dateString).toLocaleDateString(language === 'vi' ? 'vi-VN' : 'en-US')
   }
 
   const getPartnerOrSource = () => {

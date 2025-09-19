@@ -73,9 +73,9 @@ export function DebugPanel() {
               English
             </Button>
             <Button 
-              variant={language === 'vn' ? 'default' : 'outline'}
+              variant={language === 'vi' ? 'default' : 'outline'}
               size="sm"
-              onClick={() => setLanguage('vn')}
+              onClick={() => setLanguage('vi')}
               className="flex items-center gap-2"
             >
               <Languages className="h-4 w-4" />

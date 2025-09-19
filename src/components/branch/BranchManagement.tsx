@@ -48,7 +48,7 @@ const translations = {
     deleteError: 'Failed to delete branch',
     loading: 'Loading...'
   },
-  vn: {
+  vi: {
     title: 'Quản Lý Chi Nhánh',
     description: 'Quản lý chi nhánh thuộc các tổ chức cho hoạt động theo địa điểm',
     createNew: 'Tạo Chi Nhánh Mới',

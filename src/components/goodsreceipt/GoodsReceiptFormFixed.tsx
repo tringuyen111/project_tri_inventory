@@ -103,7 +103,7 @@ const translations = {
     receiptSaved: 'Receipt saved as draft successfully',
     receiptSubmitted: 'Receipt submitted to receiving successfully'
   },
-  vn: {
+  vi: {
     // Header section
     receiptHeader: 'Thông Tin Phiếu',
     receiptNo: 'Số Phiếu',

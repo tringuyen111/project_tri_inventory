@@ -81,7 +81,7 @@ export function AssetNoneManagement() {
         createFirst: 'Create your first asset record to get started.'
       }
     },
-    vn: {
+    vi: {
       title: 'Quản lý Asset (None)',
       description: 'Quản lý tồn kho asset theo số lượng bulk',
       addNew: 'Thêm bản ghi mới',

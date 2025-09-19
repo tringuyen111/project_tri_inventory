@@ -1,12 +1,24 @@
 import React, { createContext, useContext, useState } from 'react'
 
-type Language = 'en' | 'vn'
+type Language = 'en' | 'vi'
 
 interface LanguageContextType {
   language: Language
   currentLanguage: Language
   setLanguage: (language: Language) => void
   t: (key: string, params?: Record<string, string>) => string
+}
+
+const DEFAULT_LANGUAGE: Language = 'en'
+
+const normalizeLanguage = (value: string | null): Language => {
+  if (value === 'vi' || value === 'en') {
+    return value
+  }
+  if (value === 'vn') {
+    return 'vi'
+  }
+  return DEFAULT_LANGUAGE
 }
 
 const translations = {
@@ -127,7 +139,7 @@ const translations = {
     'common.searchBranches': 'Search branches...',
     'common.noResults': 'No results found'
   },
-  vn: {
+  vi: {
     // Navigation
     'nav.dashboards': 'Bảng điều khiển',
     'nav.warehouseOperations': 'Vận hành kho',
@@ -252,10 +264,10 @@ export function LanguageProvider({ children }: { children: React.ReactNode }) {
   const [language, setLanguage] = useState<Language>(() => {
     // Try to get saved language from localStorage
     if (typeof window !== 'undefined') {
-      const saved = localStorage.getItem('language') as Language
-      return saved || 'en'
+      const saved = localStorage.getItem('language')
+      return normalizeLanguage(saved)
     }
-    return 'en'
+    return DEFAULT_LANGUAGE
   })
 
   const t = (key: string, params?: Record<string, string>): string => {

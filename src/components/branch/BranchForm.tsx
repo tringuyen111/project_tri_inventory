@@ -49,7 +49,7 @@ const translations = {
     duplicateCode: 'This branch code already exists in the selected organization',
     noOrganizations: 'No active organizations available'
   },
-  vn: {
+  vi: {
     createTitle: 'Tạo Chi Nhánh Mới',
     editTitle: 'Chỉnh Sửa Chi Nhánh',
     createDescription: 'Thêm chi nhánh mới vào tổ chức đã chọn.',

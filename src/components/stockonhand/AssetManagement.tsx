@@ -74,7 +74,7 @@ export function AssetManagement() {
       currentStatus: 'Current status',
       newStatus: 'New status'
     },
-    vn: {
+    vi: {
       title: 'Quản lý Asset (Serial)',
       description: 'Quản lý tài sản cá nhân với số serial duy nhất',
       create: 'Tạo Asset',

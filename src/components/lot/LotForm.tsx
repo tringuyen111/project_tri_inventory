@@ -66,7 +66,7 @@ export function LotForm({ lot, isEdit = false, onSave, onCancel, showCard = true
       modelAssetReadonly: 'Model asset cannot be modified',
       receivedDateReadonly: 'Received date cannot be modified'
     },
-    vn: {
+    vi: {
       title: isEdit ? 'Sửa Lot/Lô hàng' : 'Tạo Lot/Lô hàng mới',
       lotCode: 'Mã Lot',
       modelAsset: 'Model Tài sản',

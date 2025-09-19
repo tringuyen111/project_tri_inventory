@@ -67,7 +67,7 @@ export function PartnerForm({ isOpen, onClose, onSave, partner, mode }: PartnerF
       createSuccess: 'Partner created successfully',
       updateSuccess: 'Partner updated successfully'
     },
-    vn: {
+    vi: {
       createTitle: 'Tạo Đối Tác Mới',
       editTitle: 'Chỉnh Sửa Đối Tác',
       partnerCode: 'Mã Đối Tác',

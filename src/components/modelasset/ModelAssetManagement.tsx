@@ -64,7 +64,7 @@ export function ModelAssetManagement() {
       noResults: 'No model assets found',
       showingResults: 'Showing {count} model assets'
     },
-    vn: {
+    vi: {
       title: 'Quản lý Model Asset',
       description: 'Quản lý Model Assets với phương thức theo dõi và đơn vị tính',
       create: 'Tạo Model Asset',

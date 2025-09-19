@@ -14,7 +14,7 @@ const translations = {
     noAssetModel: 'No asset model found.',
     assetModels: 'Asset Models'
   },
-  vn: {
+  vi: {
     selectAssetModel: 'Chọn mẫu tài sản',
     searchAssetModel: 'Tìm kiếm mẫu tài sản...',
     noAssetModel: 'Không tìm thấy mẫu tài sản.',

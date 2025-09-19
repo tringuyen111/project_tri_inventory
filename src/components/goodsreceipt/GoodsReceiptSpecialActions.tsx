@@ -46,7 +46,7 @@ const translations = {
     overReceiptInfo: 'Over receipts are allowed but require verification of additional quantities.',
     splitLineInfo: 'Split lines allow receiving the same model in multiple lots, bins, or entries.'
   },
-  vn: {
+  vi: {
     specialActions: 'Hành Động Đặc Biệt',
     cancel: 'Hủy Phiếu',
     reverse: 'Đảo Ngược Phiếu',

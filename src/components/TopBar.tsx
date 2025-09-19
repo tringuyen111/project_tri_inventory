@@ -105,8 +105,8 @@ export function TopBar() {
                 {t('common.english')}
               </DropdownMenuItem>
               <DropdownMenuItem 
-                onClick={() => setLanguage('vn')}
-                className={language === 'vn' ? 'bg-accent' : ''}
+                onClick={() => setLanguage('vi')}
+                className={language === 'vi' ? 'bg-accent' : ''}
               >
                 {t('common.vietnamese')}
               </DropdownMenuItem>

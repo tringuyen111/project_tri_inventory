@@ -18,7 +18,7 @@ const translations = {
     receiptCreated: 'Receipt created successfully',
     unsavedChanges: 'You have unsaved changes. Are you sure you want to leave?'
   },
-  vn: {
+  vi: {
     backToList: 'Quay Lại Danh Sách Phiếu Nhập',
     createReceipt: 'Tạo Phiếu Nhập Kho',
     editReceipt: 'Sửa Phiếu Nhập Kho',

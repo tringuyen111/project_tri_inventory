@@ -36,7 +36,7 @@ export function AssetHistoryDialog({
       partnerAssigned: 'Partner Assigned',
       system: 'System'
     },
-    vn: {
+    vi: {
       title: 'Lịch sử Asset',
       description: 'Xem lịch sử thay đổi đầy đủ của asset này',
       action: 'Hành động',

@@ -112,7 +112,7 @@ const translations = {
     validationErrors: 'Please fix the following errors:',
     unsavedChanges: 'You have unsaved changes. Are you sure you want to leave?'
   },
-  vn: {
+  vi: {
     // Navigation
     backToList: 'Quay Lại Danh Sách Phiếu Nhập',
     createReceipt: 'Tạo Phiếu Nhập Kho',
