@@ -14,7 +14,7 @@ const translations = {
     noWarehouse: 'No warehouse found.',
     warehouses: 'Warehouses'
   },
-  vn: {
+  vi: {
     selectWarehouse: 'Chọn kho',
     searchWarehouse: 'Tìm kiếm kho...',
     noWarehouse: 'Không tìm thấy kho.',

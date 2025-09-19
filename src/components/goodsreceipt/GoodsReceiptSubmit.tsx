@@ -79,7 +79,7 @@ const translations = {
     barcode: 'Barcode',
     notes: 'Notes'
   },
-  vn: {
+  vi: {
     title: 'Gửi Phiếu Nhập Chờ Duyệt',
     backToList: 'Về Danh Sách',
     receiptHeader: 'Thông Tin Phiếu',
@@ -255,11 +255,11 @@ export function GoodsReceiptSubmit({ receiptId, onBack }: GoodsReceiptSubmitProp
   const canSubmit = validationResults.every(r => r.type === 'success')
 
   const formatDate = (dateString: string) => {
-    return new Date(dateString).toLocaleDateString(language === 'vn' ? 'vi-VN' : 'en-US')
+    return new Date(dateString).toLocaleDateString(language === 'vi' ? 'vi-VN' : 'en-US')
   }
 
   const formatDateTime = (dateString: string) => {
-    return new Date(dateString).toLocaleString(language === 'vn' ? 'vi-VN' : 'en-US')
+    return new Date(dateString).toLocaleString(language === 'vi' ? 'vi-VN' : 'en-US')
   }
 
   const getPartnerOrSource = () => {
@@ -302,7 +302,7 @@ export function GoodsReceiptSubmit({ receiptId, onBack }: GoodsReceiptSubmitProp
     }
     
     toast.success(
-      language === 'vn' 
+      language === 'vi' 
         ? `Phiếu ${receipt.receipt_no} đã được gửi chờ duyệt thành công` 
         : `Receipt ${receipt.receipt_no} submitted for approval successfully`
     )

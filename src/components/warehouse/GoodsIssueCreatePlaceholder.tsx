@@ -92,7 +92,7 @@ const translations = {
       Cancelled: 'Cancelled'
     } as Record<IssueStatus, string>
   },
-  vn: {
+  vi: {
     title: 'Tạo Phiếu Xuất Kho',
     description:
       'Biểu mẫu tạm thời này sẽ gửi sự kiện mô phỏng để màn hình quản lý hiển thị phiếu mới.',

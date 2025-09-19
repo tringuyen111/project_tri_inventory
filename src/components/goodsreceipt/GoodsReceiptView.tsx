@@ -118,7 +118,7 @@ const translations = {
     yes: 'Yes',
     no: 'No'
   },
-  vn: {
+  vi: {
     // Navigation
     backToList: 'Quay Lại Danh Sách Phiếu Nhập',
     viewReceipt: 'Xem Phiếu Nhập Kho',
@@ -276,11 +276,11 @@ export function GoodsReceiptView({ receiptId }: GoodsReceiptViewProps) {
   }
 
   const formatDate = (dateString: string) => {
-    return new Date(dateString).toLocaleString(language === 'vn' ? 'vi-VN' : 'en-US')
+    return new Date(dateString).toLocaleString(language === 'vi' ? 'vi-VN' : 'en-US')
   }
 
   const formatDateOnly = (dateString: string) => {
-    return new Date(dateString).toLocaleDateString(language === 'vn' ? 'vi-VN' : 'en-US')
+    return new Date(dateString).toLocaleDateString(language === 'vi' ? 'vi-VN' : 'en-US')
   }
 
   const getPartnerOrSource = () => {

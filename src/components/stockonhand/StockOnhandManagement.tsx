@@ -22,7 +22,7 @@ export function StockOnhandManagement() {
       lotDescription: 'Batch/lot tracking for grouped items',
       noneDescription: 'Bulk quantity tracking without individual identification'
     },
-    vn: {
+    vi: {
       title: 'Tồn kho',
       description: 'Quản lý tồn kho theo phương thức theo dõi',
       serialTab: 'Asset (Serial)',

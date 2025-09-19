@@ -44,7 +44,7 @@ const translations = {
     invalidCodeFormat: 'Code must follow format XX_999 (e.g., HQ_001)',
     duplicateCode: 'This organization code already exists'
   },
-  vn: {
+  vi: {
     createTitle: 'Tạo Tổ Chức Mới',
     editTitle: 'Chỉnh Sửa Tổ Chức',
     createDescription: 'Thêm tổ chức mới vào hệ thống.',

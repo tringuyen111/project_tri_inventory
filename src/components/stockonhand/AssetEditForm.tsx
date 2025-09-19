@@ -65,7 +65,7 @@ export function AssetEditForm({
       locationRequired: 'Location is required when status is In Stock',
       readOnly: 'This field cannot be modified'
     },
-    vn: {
+    vi: {
       title: 'Sửa Asset',
       description: 'Cập nhật vị trí, kho, đối tác và trạng thái asset',
       assetId: 'Mã Asset',

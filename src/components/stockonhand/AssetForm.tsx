@@ -73,7 +73,7 @@ export function AssetForm({
       success: 'Assets created successfully',
       locationRequired: 'Location is required when status is In Stock'
     },
-    vn: {
+    vi: {
       title: 'Tạo Asset',
       description: 'Tạo assets mới với số serial duy nhất',
       modelAsset: 'Model Asset',

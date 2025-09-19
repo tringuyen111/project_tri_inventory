@@ -72,7 +72,7 @@ export function ModelAssetForm({
       duplicateCode: 'Model code already exists',
       success: isEditing ? 'Model asset updated successfully' : 'Model asset created successfully'
     },
-    vn: {
+    vi: {
       title: isEditing ? 'Sửa Model Asset' : 'Tạo Model Asset',
       modelCode: 'Mã Model Asset',
       modelCodePlaceholder: 'Nhập mã model asset (ví dụ: MD_001)',

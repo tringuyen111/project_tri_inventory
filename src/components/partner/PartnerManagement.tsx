@@ -48,7 +48,7 @@ export function PartnerManagement() {
       activeSuppliers: 'Active Suppliers',
       activeCustomers: 'Active Customers'
     },
-    vn: {
+    vi: {
       title: 'Quản Lý Đối Tác',
       description: 'Quản lý nhà cung cấp và khách hàng cho hoạt động kho của bạn',
       addPartner: 'Thêm Đối Tác',

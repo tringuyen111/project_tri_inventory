@@ -69,7 +69,7 @@ const translations = {
     Return: 'Return',
     Manual: 'Manual Entry'
   },
-  vn: {
+  vi: {
     title: 'Quản Lý Phiếu Nhập Kho',
     description: 'Quản lý phiếu nhập kho, tạo phiếu mới và theo dõi tình trạng nhập hàng',
     create: 'Tạo Phiếu',
@@ -224,7 +224,7 @@ export function GoodsReceiptManagement() {
     setReceipts(prev => prev.filter(r => r.id !== id))
     setDeleteDialogOpen(false)
     setReceiptToDelete(null)
-    toast.success(language === 'vn' ? 'Xóa phiếu thành công' : 'Receipt deleted successfully')
+    toast.success(language === 'vi' ? 'Xóa phiếu thành công' : 'Receipt deleted successfully')
   }
 
   const openDeleteDialog = (receiptId: string) => {
@@ -253,7 +253,7 @@ export function GoodsReceiptManagement() {
   }
 
   const formatDate = (dateString: string) => {
-    return new Date(dateString).toLocaleDateString(language === 'vn' ? 'vi-VN' : 'en-US')
+    return new Date(dateString).toLocaleDateString(language === 'vi' ? 'vi-VN' : 'en-US')
   }
 
   const exportData = () => {
@@ -385,7 +385,7 @@ export function GoodsReceiptManagement() {
                 className="flex-1"
                 placeholder={t.startDate}
               />
-              <span className="text-sm text-muted-foreground">{language === 'vn' ? 'đến' : 'to'}</span>
+              <span className="text-sm text-muted-foreground">{language === 'vi' ? 'đến' : 'to'}</span>
               <Input
                 type="date"
                 value={endDate}

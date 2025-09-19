@@ -55,7 +55,7 @@ const translations = {
     remarksLabel: (remarks: string) => `Remarks: ${remarks}`,
     noResults: 'No goods issues found'
   },
-  vn: {
+  vi: {
     title: 'Quản Lý Phiếu Xuất Kho',
     description: 'Theo dõi phiếu xuất kho, tình trạng soạn hàng và độ chính xác thực hiện.',
     create: 'Tạo Phiếu Xuất Kho',

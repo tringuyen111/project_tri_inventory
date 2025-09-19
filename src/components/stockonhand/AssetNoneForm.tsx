@@ -52,7 +52,7 @@ export function AssetNoneForm({ onSubmit, onCancel, initialData, isSubmitting = 
       },
       note: 'Note: Quantity will be initialized to 0 and managed through inventory movements'
     },
-    vn: {
+    vi: {
       title: 'Form Asset (None)',
       description: 'Tạo bản ghi tồn kho asset không theo dõi',
       modelCode: 'Model Asset',

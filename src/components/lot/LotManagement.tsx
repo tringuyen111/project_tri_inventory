@@ -107,7 +107,7 @@ export function LotManagement() {
       mfgDate: 'Mfg Date',
       expDate: 'Exp Date'
     },
-    vn: {
+    vi: {
       title: 'Quản lý Lot/Lô hàng',
       createNew: 'Tạo Lot mới',
       search: 'Tìm kiếm theo mã lot...',
@@ -681,7 +681,7 @@ export function LotManagement() {
           <DialogHeader>
             <DialogTitle>{t.createNew}</DialogTitle>
             <DialogDescription>
-              {language === 'vn' ? 'Tạo lot/lô hàng mới cho hệ thống quản lý tồn kho.' : 'Create a new lot/batch for inventory management system.'}
+              {language === 'vi' ? 'Tạo lot/lô hàng mới cho hệ thống quản lý tồn kho.' : 'Create a new lot/batch for inventory management system.'}
             </DialogDescription>
           </DialogHeader>
           <LotForm

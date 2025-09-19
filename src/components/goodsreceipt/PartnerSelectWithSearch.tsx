@@ -14,7 +14,7 @@ const translations = {
     noPartner: 'No partner found.',
     partners: 'Partners'
   },
-  vn: {
+  vi: {
     selectPartner: 'Chọn đối tác',
     searchPartner: 'Tìm kiếm đối tác...',
     noPartner: 'Không tìm thấy đối tác.',

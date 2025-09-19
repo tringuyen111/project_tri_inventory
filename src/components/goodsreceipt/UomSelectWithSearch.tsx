@@ -14,7 +14,7 @@ const translations = {
     noUoM: 'No unit of measure found.',
     unitsOfMeasure: 'Units of Measure'
   },
-  vn: {
+  vi: {
     selectUoM: 'Chọn đơn vị tính',
     searchUoM: 'Tìm kiếm đơn vị tính...',
     noUoM: 'Không tìm thấy đơn vị tính.',

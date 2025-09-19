@@ -45,7 +45,7 @@ const translations = {
     deleteError: 'Failed to delete organization',
     loading: 'Loading...'
   },
-  vn: {
+  vi: {
     title: 'Quản Lý Tổ Chức',
     description: 'Quản lý tổ chức, thông tin cơ bản và trạng thái',
     createNew: 'Tạo Tổ Chức Mới',
