@@ -17,6 +17,7 @@ import {
   Package,
   Boxes,
   ClipboardList,
+  ClipboardCheck,
   ArrowDownToLine,
   ArrowUpFromLine,
   ArrowRightLeft,
@@ -68,6 +69,11 @@ export function AppSidebar() {
           title: t('nav.inventory'),
           icon: ClipboardList,
           url: "/warehouse/inventory"
+        },
+        {
+          title: t('nav.inventoryCount'),
+          icon: ClipboardCheck,
+          url: "/warehouse/inventory-count"
         },
         {
           title: t('nav.goodsReceipt'),
