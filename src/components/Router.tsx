@@ -16,6 +16,7 @@ import { GoodsReceiptFormWrapper } from './goodsreceipt/GoodsReceiptFormWrapper'
 import { GoodsReceiptDetail } from './goodsreceipt/GoodsReceiptDetail'
 import { GoodsReceiptApproval } from './goodsreceipt/GoodsReceiptApproval'
 import { GoodsReceiptSubmit } from './goodsreceipt/GoodsReceiptSubmit'
+import { InventoryCountManagement } from './warehouse/InventoryCountManagement'
 
 type RouteKey = 
   | 'dashboard' 
@@ -36,6 +37,7 @@ type RouteKey =
   | 'goodsreceipt/view'
   | 'goodsreceipt/approve'
   | 'goodsreceipt/submit'
+  | 'inventorycount'
 
 interface RouterProps {
   currentRoute: RouteKey
@@ -83,10 +85,12 @@ export function Router({ currentRoute }: RouterProps) {
       />
     case 'goodsreceipt/submit':
       const submitReceiptId = localStorage.getItem('submittingReceiptId')
-      return <GoodsReceiptSubmit 
-        receiptId={submitReceiptId || ''} 
-        onBack={() => window.location.hash = '#warehouse/goods-receipt'} 
+      return <GoodsReceiptSubmit
+        receiptId={submitReceiptId || ''}
+        onBack={() => window.location.hash = '#warehouse/goods-receipt'}
       />
+    case 'inventorycount':
+      return <InventoryCountManagement />
     case 'dashboard':
     default:
       return <MainContent />
@@ -119,6 +123,7 @@ export const useRouter = () => {
         'warehouse/goods-receipt/view': 'goodsreceipt/view',
         'warehouse/goods-receipt/approve': 'goodsreceipt/approve',
         'warehouse/goods-receipt/submit': 'goodsreceipt/submit',
+        'warehouse/inventory-count': 'inventorycount',
         'dashboards': 'dashboard'
       }
       
@@ -153,7 +158,8 @@ export const useRouter = () => {
       'goodsreceipt/edit': '#warehouse/goods-receipt/edit',
       'goodsreceipt/view': '#warehouse/goods-receipt/view',
       'goodsreceipt/approve': '#warehouse/goods-receipt/approve',
-      'goodsreceipt/submit': '#warehouse/goods-receipt/submit'
+      'goodsreceipt/submit': '#warehouse/goods-receipt/submit',
+      'inventorycount': '#warehouse/inventory-count'
     }
     
     window.location.hash = routeMap[route]
