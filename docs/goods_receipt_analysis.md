@@ -1,0 +1,40 @@
+# Phân tích luồng nghiệp vụ Goods Receipt
+
+## 1. Tổng quan luồng chính
+- Điều hướng chính của ứng dụng dựa trên `hash` trong URL và ánh xạ sang các component quản lý nghiệp vụ. Khi `currentRoute` là `goodsreceipt`, Router trả về trang danh sách phiếu nhập; các route con như `goodsreceipt/create`, `goodsreceipt/edit`, `goodsreceipt/view`, `goodsreceipt/approve` và `goodsreceipt/submit` lần lượt chuyển đến các màn hình chuyên biệt tương ứng. Các giá trị định tuyến tạm thời được lấy từ `localStorage` trước khi render.【F:src/components/Router.tsx†L21-L97】
+- Trang danh sách phiếu nhập (`GoodsReceiptManagement`) khởi tạo trạng thái bằng bộ dữ liệu mẫu, cho phép tìm kiếm, lọc theo nhiều tiêu chí, xuất CSV và thực hiện các hành động như tạo mới, xem, sửa, gửi duyệt, phê duyệt và xóa tùy theo trạng thái của phiếu.【F:src/components/goodsreceipt/GoodsReceiptManagement.tsx†L135-L526】
+- Màn hình form (`GoodsReceiptFormWrapper`) nhận biết chế độ tạo/sửa/xem, nạp dữ liệu phiếu từ `localStorage`, phát toast khi lưu thành công và điều hướng quay về danh sách sau khi hoàn thành hoặc hủy bỏ.【F:src/components/goodsreceipt/GoodsReceiptFormWrapper.tsx†L37-L119】
+
+## 2. Luồng chi tiết
+1. **Mở trang danh sách phiếu nhập**
+   - Người dùng truy cập `#warehouse/goods-receipt`, Router trả về component `GoodsReceiptManagement`. Dữ liệu danh sách lấy từ `mockGoodsReceipts` và được lọc bởi `useMemo` dựa trên các tiêu chí: từ khóa, trạng thái, loại phiếu, kho đích, kho nguồn, đối tác và khoảng ngày dự kiến.【F:src/components/goodsreceipt/GoodsReceiptManagement.tsx†L139-L193】
+2. **Tạo phiếu mới**
+   - Nhấn nút “Create Receipt” sẽ chuyển hash sang `#warehouse/goods-receipt/create`. Form wrapper chuyển sang mode `create` và hiển thị form rỗng; khi người dùng lưu, hàm `handleSuccess` phát toast, xóa `editingReceiptId` (nếu có) và điều hướng về danh sách sau 1.5s.【F:src/components/goodsreceipt/GoodsReceiptManagement.tsx†L195-L303】【F:src/components/goodsreceipt/GoodsReceiptFormWrapper.tsx†L53-L63】
+3. **Sửa phiếu ở trạng thái Nháp/Đang nhận**
+   - Menu hành động cho phép sửa khi `status` là `Draft` hoặc `Receiving`. Hệ thống lưu `editingReceiptId` vào `localStorage` rồi chuyển hash sang `#warehouse/goods-receipt/edit`; wrapper lấy ID này để nạp dữ liệu ban đầu.【F:src/components/goodsreceipt/GoodsReceiptManagement.tsx†L199-L203】【F:src/components/goodsreceipt/GoodsReceiptManagement.tsx†L461-L466】【F:src/components/goodsreceipt/GoodsReceiptFormWrapper.tsx†L41-L51】
+4. **Xem phiếu**
+   - Menu hành động luôn cho phép “View”, lưu `viewingReceiptId` vào `localStorage` và điều hướng đến `#warehouse/goods-receipt/view` để hiển thị chi tiết.【F:src/components/goodsreceipt/GoodsReceiptManagement.tsx†L217-L221】【F:src/components/Router.tsx†L77-L80】
+5. **Gửi duyệt & Phê duyệt**
+   - Phiếu ở trạng thái `Receiving` có tùy chọn “Submit for Approval” lưu `submittingReceiptId` rồi điều hướng đến trang gửi duyệt. Phiếu `Submitted` có tùy chọn “Approve” tương tự với `approvingReceiptId`; cả hai màn hình có nút “Back” điều hướng về danh sách bằng cách đổi hash.【F:src/components/goodsreceipt/GoodsReceiptManagement.tsx†L205-L215】【F:src/components/goodsreceipt/GoodsReceiptManagement.tsx†L473-L477】【F:src/components/Router.tsx†L80-L91】
+6. **Xóa phiếu nháp**
+   - Chỉ phiếu `Draft` mới hiện hành động “Delete”. Khi xác nhận, item bị loại khỏi state `receipts`, dialog đóng và hiển thị toast thành công.【F:src/components/goodsreceipt/GoodsReceiptManagement.tsx†L223-L528】
+
+## 3. Danh sách test case đề xuất
+| ID | Kịch bản | Bước chính | Kỳ vọng |
+| --- | --- | --- | --- |
+| TC01 | Lọc phiếu theo nhiều tiêu chí | Nhập từ khóa khớp `receipt_no`, chọn trạng thái, loại, kho đích, kho nguồn, đối tác và khoảng ngày | Danh sách chỉ còn các phiếu đáp ứng toàn bộ điều kiện do `filteredReceipts` áp dụng tất cả điều kiện lọc một cách kết hợp.【F:src/components/goodsreceipt/GoodsReceiptManagement.tsx†L156-L193】 |
+| TC02 | Xuất CSV danh sách hiện tại | Áp dụng một bộ lọc, nhấn “Export” | File CSV tải xuống chỉ chứa các dòng đang hiển thị, trường “Type/Status” được dịch theo ngôn ngữ hiện tại.【F:src/components/goodsreceipt/GoodsReceiptManagement.tsx†L259-L282】 |
+| TC03 | Điều hướng tạo mới | Nhấn “Create Receipt” | Hash đổi sang `#warehouse/goods-receipt/create`, form hiển thị chế độ tạo mới không có dữ liệu cũ.【F:src/components/goodsreceipt/GoodsReceiptManagement.tsx†L295-L303】【F:src/components/goodsreceipt/GoodsReceiptFormWrapper.tsx†L37-L63】 |
+| TC04 | Sửa phiếu nháp | Chọn phiếu trạng thái `Draft`, chọn “Edit”, chỉnh sửa và lưu | `editingReceiptId` được lưu trước khi điều hướng; sau khi lưu thành công, toast hiển thị và danh sách quay lại sau 1.5s.【F:src/components/goodsreceipt/GoodsReceiptManagement.tsx†L199-L203】【F:src/components/goodsreceipt/GoodsReceiptManagement.tsx†L461-L466】【F:src/components/goodsreceipt/GoodsReceiptFormWrapper.tsx†L53-L63】 |
+| TC05 | Quyền thao tác theo trạng thái | Mở menu hành động cho từng trạng thái mẫu (`Draft`, `Receiving`, `Submitted`) | Chỉ các hành động hợp lệ mới hiển thị: `Edit/Delete` cho `Draft`, `Edit/Submit` cho `Receiving`, `Approve` cho `Submitted`.【F:src/components/goodsreceipt/GoodsReceiptManagement.tsx†L461-L485】 |
+| TC06 | Xóa phiếu nháp | Chọn “Delete” trên phiếu `Draft`, xác nhận dialog | Phiếu biến mất khỏi danh sách, toast thành công hiển thị, bộ đếm tổng cập nhật.【F:src/components/goodsreceipt/GoodsReceiptManagement.tsx†L223-L528】 |
+| TC07 | Gửi duyệt phiếu đang nhận | Phiếu `Receiving` → “Submit for Approval” → hoàn tất quy trình trong màn hình gửi | `submittingReceiptId` được lưu, component `GoodsReceiptSubmit` nhận ID và có thể gọi `onBack` để quay lại danh sách.【F:src/components/goodsreceipt/GoodsReceiptManagement.tsx†L205-L215】【F:src/components/Router.tsx†L86-L91】 |
+| TC08 | Phê duyệt phiếu đã gửi | Phiếu `Submitted` → “Approve” → xác nhận trong màn hình phê duyệt | `approvingReceiptId` được lưu, component `GoodsReceiptApproval` nhận ID và hỗ trợ quay lại danh sách qua `onBack`.【F:src/components/goodsreceipt/GoodsReceiptManagement.tsx†L205-L215】【F:src/components/goodsreceipt/GoodsReceiptManagement.tsx†L467-L472】【F:src/components/Router.tsx†L80-L85】 |
+| TC09 | Hủy thao tác trong form | Ở chế độ `edit` hoặc `view`, nhấn “Back to Goods Receipt List” hoặc “Cancel” | ID tương ứng bị xóa khỏi `localStorage`, hash trở về `#warehouse/goods-receipt`.【F:src/components/goodsreceipt/GoodsReceiptFormWrapper.tsx†L65-L84】 |
+
+## 4. Bất cập và đề xuất cải tiến
+1. **Quản lý trạng thái dựa vào `localStorage`**: Việc truyền ID giữa màn hình sử dụng `localStorage` khiến dữ liệu cũ có thể tồn tại lâu và gây nhầm lẫn khi mở nhiều tab. Nên cân nhắc dùng state toàn cục (Context/Redux) hoặc tham số route có query/hash rõ ràng để đảm bảo tính nhất quán và dễ kiểm soát vòng đời dữ liệu.【F:src/components/goodsreceipt/GoodsReceiptManagement.tsx†L199-L221】【F:src/components/Router.tsx†L72-L91】
+2. **Thiếu kiểm tra thay đổi chưa lưu**: Các hàm hủy/thoát khỏi form chỉ điều hướng ngay, dù đã có ghi chú “In a real implementation…”. Cần bổ sung cơ chế phát hiện thay đổi và dialog xác nhận trước khi rời trang để tránh mất dữ liệu người dùng.【F:src/components/goodsreceipt/GoodsReceiptFormWrapper.tsx†L65-L84】
+3. **Bộ lọc ngày không chuẩn hóa múi giờ**: Hàm so sánh ngày dùng `new Date` trực tiếp, dễ gặp sai lệch múi giờ khi dữ liệu có timezone khác. Đề xuất chuẩn hóa về đầu ngày/cuối ngày hoặc dùng thư viện xử lý thời gian để so sánh chính xác hơn.【F:src/components/goodsreceipt/GoodsReceiptManagement.tsx†L175-L189】
+4. **Xuất CSV dùng DOM manipulation trực tiếp**: Hàm `exportData` tạo thẻ `<a>` thủ công và encode CSV đơn giản, dễ gặp lỗi với dữ liệu chứa dấu phẩy hoặc ký tự đặc biệt. Nên chuyển sang thư viện chuyên dụng (ví dụ `papaparse`) và tạo blob để tải file an toàn hơn.【F:src/components/goodsreceipt/GoodsReceiptManagement.tsx†L259-L282】
+5. **Thiếu kiểm thử tự động**: Các luồng nghiệp vụ chính hiện chưa có test tự động (unit/UI). Nên bổ sung test cho hàm lọc dữ liệu và test e2e cho các luồng điều hướng để tránh hồi quy trong tương lai.【F:src/components/goodsreceipt/GoodsReceiptManagement.tsx†L156-L193】【F:src/components/Router.tsx†L46-L97】
